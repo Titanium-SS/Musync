@@ -37,10 +37,13 @@ Another file namely player.py is provided to test any code upgrades and changes 
 
 ## How to Use:
 1. By script 
+
 Run the player.py file in any **IDE** of your choice.
 <br><br>
-2. Through Terminal 
-NOTE: change the path to logo.png in the *musync.py* to the compplete path in your system
+
+2. Through Terminal
+
+NOTE: change the path to logo.png in the *musync.py* to the complete path in your system
 - Convert the musync.py to exe:
 ```
 > pyinstaller --onefile musync.py
