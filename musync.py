@@ -18,7 +18,7 @@ class MUSYNC:
         self.status = 'stopped'
         self.fpsclock = pygame.time.Clock()
         self.screen = pygame.display.set_mode([self.NUMBER * self.WIDTH, 50 + self.HEIGHT])
-        icon = pygame.image.load('readme/logo.png')
+        icon = pygame.image.load('C:/Users/viper/Desktop/Python/Musync/readme/logo.png')    # path to logo.png (give complete path for to logo.png for runnng through terminal anywhere)
         pygame.display.set_icon(icon)
         pygame.display.set_caption('MUSYNC')
         self.my_font = pygame.font.SysFont('consolas', 16)

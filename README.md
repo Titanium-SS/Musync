@@ -21,7 +21,7 @@ Music Visualizer in Python
     <img src="readme/Numpy.png" height=70> 
     <img src="readme/pygame.webp" height=70>
     <img src="readme/scipy.png" height=70>
-    <img src="readme/ffmpeg.png" height=70>
+    <img src="readme/ffmpeg-python.png" height=70>
 </div>
 
 <hr>
@@ -40,6 +40,7 @@ Another file namely player.py is provided to test any code upgrades and changes 
 Run the player.py file in any **IDE** of your choice.
 <br><br>
 2. Through Terminal 
+NOTE: change the path to logo.png in the *musync.py* to the compplete path in your system
 - Convert the musync.py to exe:
 ```
 > pyinstaller --onefile musync.py
@@ -63,7 +64,7 @@ To reflect any changes made to *musync.py* to the `.exe`, run the following comm
 <hr>
 
 ## Musync in Action:
-https://github.com/Titanium-SS/Musync/readme/musync_in_action.mp4
+https://github.com/Titanium-SS/Musync/blob/main/readme/musync_in_action.mp4
 
 <hr>
 
