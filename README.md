@@ -5,7 +5,6 @@ Music Visualizer in Python
     <img src="readme/logo.png" height=300> 
 </div>
 
-
 <hr>
 
 ## Language Used: 
@@ -62,8 +61,6 @@ To reflect any changes made to *musync.py* to the `.exe`, run the following comm
 > pyinstaller --onefile musync.py
 ```
 
-
-
 <hr>
 
 ## Musync in Action:
@@ -73,11 +70,21 @@ https://github.com/Titanium-SS/Musync/blob/main/readme/musync_in_action.mp4
 
 ## To install requirements:
 
+for windows only:
+```
+> winget install ffmpeg
+```
+
+for Ubuntu:
+```
+$ apt install ffmpeg
+```
+
+and necessary Python Libraries
 simply run:
 ```
 > pip install requirements.txt
 ```
-
 
 <hr>
 
