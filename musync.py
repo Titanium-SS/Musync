@@ -18,9 +18,9 @@ class MUSYNC:
         self.status = 'stopped'
         self.fpsclock = pygame.time.Clock()
         self.screen = pygame.display.set_mode([self.NUMBER * self.WIDTH, 50 + self.HEIGHT])
-        icon = pygame.image.load('C:/Users/viper/Desktop/Python/Musync/readme/logo.png')    # path to logo.png (give complete path for to logo.png for runnng through terminal anywhere)
+        icon = pygame.image.load('./readme/logo.png')
         pygame.display.set_icon(icon)
-        pygame.display.set_caption('MUSYNC')
+        pygame.display.set_caption('Musync')
         self.my_font = pygame.font.SysFont('consolas', 16)
         self.num = None
         self.wave_data = None
@@ -129,7 +129,6 @@ class MUSYNC:
         for i in bars:
             pygame.draw.rect(self.screen, i[4], i[:4], 0)
 
-
     def run(self):
         while True:
             for event in pygame.event.get():
@@ -154,9 +153,7 @@ class MUSYNC:
 
 def main():
     parser = argparse.ArgumentParser(description="Audio Visualizer")
-
     parser.add_argument('--play', type=str, required=True, help='The path of the audio file to play')
-
     args = parser.parse_args()
 
     pygame.init()
