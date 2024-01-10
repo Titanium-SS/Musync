@@ -56,11 +56,11 @@ triggering a `Auto Py To Exe window`. To know more about the process visit <a hr
 
 > in option Icon : add path to `icon.ico`
 
-> in option Additional Files : add path to logo.png
+> in option Additional Files : add path to `logo.png`
 
 > Click CONVERT .PY TO .EXE
 
-after finishing an `output` folder will appear containing the  `musync.exe` application. Copy and add logo.png to this folder(`output`) also.
+after finishing an `output` folder will appear containing the  `musync.exe` application. Copy and add `logo.png` to this folder(`output`) also.
 
 <hr>
 
