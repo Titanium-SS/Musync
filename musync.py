@@ -29,17 +29,10 @@ class AudioVisualizer:
         self.status = '< Drop Audio File Here >'
         self.fpsclock = pygame.time.Clock()
         self.screen = pygame.display.set_mode([self.NUMBER * self.WIDTH, 50 + self.HEIGHT])
-<<<<<<< HEAD
         icon = pygame.image.load(resource_path('logo.png'))
         pygame.display.set_icon(icon)
         pygame.display.set_caption('Musync')
         self.my_font = pygame.font.SysFont('Times', 18)
-=======
-        icon = pygame.image.load('./readme/logo.png')
-        pygame.display.set_icon(icon)
-        pygame.display.set_caption('Musync')
-        self.my_font = pygame.font.SysFont('consolas', 16)
->>>>>>> 158f52ec6ff2b5bc30be2bda1dee027a6ddb77ad
         self.num = None
         self.wave_data = None
         self.framerate = None
@@ -158,6 +151,7 @@ class AudioVisualizer:
         for i in bars:
             pygame.draw.rect(self.screen, i[4], i[:4], 0)
 
+
     def run(self):
             while True:
                 for event in pygame.event.get():
@@ -198,13 +192,6 @@ class AudioVisualizer:
                 pygame.display.update(pygame.Rect(0, 0, self.NUMBER * self.WIDTH, 50 + self.HEIGHT))
 
 def main():
-<<<<<<< HEAD
-=======
-    parser = argparse.ArgumentParser(description="Audio Visualizer")
-    parser.add_argument('--play', type=str, required=True, help='The path of the audio file to play')
-    args = parser.parse_args()
-
->>>>>>> 158f52ec6ff2b5bc30be2bda1dee027a6ddb77ad
     pygame.init()
     pygame.mixer.init()
     visualizer = AudioVisualizer()
