@@ -1,6 +1,7 @@
 numpy
-ffmpeg-python
 scipy
 pygame
 argparse
 pyinstaller
+ffmpeg-python
+auto-py-to-exe

@@ -1,8 +1,8 @@
 # MUSYNC
-Music Visualizer in Python
-
+<hr>
 <div align="center">
-    <img src="readme/logo.png" height=300> 
+    <img src="icon.ico" height=300> 
+    <p>Music Visualizer in Python</p>
 </div>
 
 <hr>
@@ -14,8 +14,7 @@ Music Visualizer in Python
 
 <hr>
 
-## Libraries Used
-
+## Libraries Used:
 <div align="center">
     <img src="readme/Numpy.png" height=70> 
     <img src="readme/pygame.webp" height=70>
@@ -26,66 +25,46 @@ Music Visualizer in Python
 <hr>
 
 ## About:
-MUSYNC is a very basic and simple Music Visualizer written in Python Programming Language.
-MUSYNC is able to play any audio file if it is in a format supported by `ffmpeg`. 
-The script *musync.py* can converted to an executable using `pyinstaller` hence can be run from terminal itself.
-
-Another file namely player.py is provided to test any code upgrades and changes before implementing it in the main file. It can be run through the `python player.py` command.
+`Musync` is a simple Music Visualizer written in Python Programming Language made in order to enjoy some visuals along with casually played music. It supparts the feature of Drag-&-Drop audio file to play it. `Musync` is able to play an audio file if it is in any one of the following formats: (.wav, .mp3, .ogg, .flac, .opus, .m4a, .raw).
+ 
+The script *musync.py* can be converted to an application using `auto-py-to-exe`.
 
 <hr>
 
-## How to Use:
-1. By script 
+## Build Application:
 
-Run the player.py file in any **IDE** of your choice.
-<br><br>
+make sure you have <a herf="https://ffmpeg.org/download.html">ffmpeg</a> installed in your system. 
 
-2. Through Terminal
-
-NOTE: change the path to logo.png in the *musync.py* to the complete path in your system
-- Convert the musync.py to exe:
+and for necessary Python Libraries, simply run:
 ```
-> pyinstaller --onefile musync.py
-```
-- Navigate to *dist* directory in the same folder, open terminal and run 
-```
-> musync --play "path to an audio file"
+pip install -r requirements.txt
 ```
 
-This takes a few seconds and then a MUSYNC window will appear, simultaneously playing the music as well as visualizing it. 
+Now open terminal and run:
 
-You can add the path to the *musync.exe* in *dist* directory to your System Path so that the musync command is available globally. 
+```
+auto-py-to-exe
+```
 
-To reflect any changes made to *musync.py* to the `.exe`, run the following command:
-```
-> pyinstaller --onefile musync.py
-```
+triggering a `Auto Py To Exe window`. To know more about the process visit <a href="https://pypi.org/project/auto-py-to-exe/">here</a>.
+
+> in option Script Location : add path to `musync.py`
+> in option Onefile : select One File
+> in option Console Window: select Window Based (hide the console)
+> in option Icon : add path to `icon.ico`
+> in option Additional Files : add path to logo.png
+> Click CONVERT .PY TO .EXE
+
+after finishing an `output` folder will appear containing the  `musync.exe` application. Copy and add logo.png to this folder(`output`) also.
 
 <hr>
 
 ## Musync in Action:
-https://github.com/Titanium-SS/Musync/blob/main/readme/musync_in_action.mp4
+<div align="center">
+    <img src="readme/waiting.png"> 
+    <img src="readme/playing.png">
+</div>
 
 <hr>
 
-## To install requirements:
-
-for windows only:
-```
-> winget install ffmpeg
-```
-
-for Ubuntu:
-```
-$ apt install ffmpeg
-```
-
-and necessary Python Libraries
-simply run:
-```
-> pip install requirements.txt
-```
-
-<hr>
-
-Any suggestions, improvements, and feedback is welcome.
+<u>Any suggestions, improvements, and feedback is welcome.</u>

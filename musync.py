@@ -4,47 +4,63 @@ import wave
 import numpy
 import pygame
 import ffmpeg
-import argparse
 from pygame.locals import *
 from scipy.fftpack import dct
 
-class MUSYNC:
-    def __init__(self, input_file):
+
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS or _MEIPASS2
+        base_path = sys._MEIPASS2
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
+
+
+class AudioVisualizer:
+    def __init__(self):
         self.NUMBER = 30
         self.HEIGHT = 600
         self.WIDTH = 40
         self.FPS = 10
-        self.file_name = input_file
-        self.status = 'stopped'
+        self.file_name = None
+        self.status = '< Drop Audio File Here >'
         self.fpsclock = pygame.time.Clock()
         self.screen = pygame.display.set_mode([self.NUMBER * self.WIDTH, 50 + self.HEIGHT])
-        icon = pygame.image.load('C:/Users/viper/Desktop/Python/Musync/readme/logo.png')    # path to logo.png (give complete path for to logo.png for runnng through terminal anywhere)
+        icon = pygame.image.load(resource_path('logo.png'))
         pygame.display.set_icon(icon)
-        pygame.display.set_caption('MUSYNC')
-        self.my_font = pygame.font.SysFont('consolas', 16)
+        pygame.display.set_caption('Musync')
+        self.my_font = pygame.font.SysFont('Times', 18)
         self.num = None
         self.wave_data = None
         self.framerate = None
         self.nframes = None
         self.total_playtime = 0
 
+
     def load_and_convert_audio(self):
         try:
+            pygame.mixer.music.stop()
+            pygame.mixer.music.unload()
             ffmpeg.input(self.file_name).output('output.wav').overwrite_output().run()
         except Exception as e:
-            print(f"Error converting audio file: {e}")
+            print(f"Error Converting Audio File: {e}")
             sys.exit(1)
+
 
     def play_audio(self):
         try:
-            pygame.mixer.music.load("output.wav")
+            pygame.mixer.music.load(resource_path("output.wav"))
             pygame.mixer.music.play()
             pygame.mixer.music.set_endevent()
             pygame.mixer.music.set_volume(10)
             self.status = "playing"
         except pygame.error as e:
-            print(f"Error loading audio file: {e}")
+            print(f"Error Loading Audio File: {e}")
             sys.exit(1)
+
 
     def read_audio_file(self):
         try:
@@ -58,14 +74,16 @@ class MUSYNC:
             self.wave_data = wave_data.T
             self.num = self.nframes
         except wave.Error as e:
-            print(f"Error reading audio file: {e}")
+            print(f"Error Reading Audio File: {e}")
             sys.exit(1)
+
 
     def Visualizer(self, nums):
         num = int(nums)
         h = abs(dct(self.wave_data[0][self.nframes - num:self.nframes - num + self.NUMBER]))
         h = [min(self.HEIGHT, int(i ** (1 / 2.5) * self.HEIGHT / 100)) for i in h]
         self.draw_bars(h)
+
 
     def vis(self):
         if self.status == "stopped":
@@ -74,9 +92,11 @@ class MUSYNC:
         elif self.status == "paused":
             self.Visualizer(self.num)
         else:
-            self.num -= self.framerate / self.FPS
-            if self.num > 0:
-                self.Visualizer(self.num)
+            if self.framerate is not None:
+                self.num -= self.framerate / self.FPS
+                if self.num > 0:
+                    self.Visualizer(self.num)
+
 
     def get_time(self):
         seconds = max(0, self.total_playtime + pygame.mixer.music.get_pos() / 1000)
@@ -84,8 +104,10 @@ class MUSYNC:
         h, m = divmod(m, 60)
         hms = ("%02d:%02d:%02d" % (h, m, s))
         return hms
+    
 
     def controller(self, key):
+        print(key)
         if self.status == "stopped":
             if key == K_RETURN:
                 pygame.mixer_music.play()
@@ -106,13 +128,13 @@ class MUSYNC:
                 pygame.mixer.music.pause()
                 self.status = "paused"
             elif key == K_LEFT:
-                t = max(0, t - 10)
+                t = max(0, t - 5)
                 self.total_playtime = t
                 pygame.mixer.music.stop()
                 pygame.mixer.music.play(0, t)
                 self.num = self.nframes - t * self.framerate
             elif key == K_RIGHT:
-                t = min(self.nframes / self.framerate, t + 10)
+                t = min(self.nframes / self.framerate, t + 5)
                 self.total_playtime = t
                 pygame.mixer.music.stop()
                 pygame.mixer.music.play(0, t)
@@ -131,40 +153,48 @@ class MUSYNC:
 
 
     def run(self):
-        while True:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    sys.exit()
-                elif event.type == KEYDOWN:
-                    self.controller(event.key)
+            while True:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        sys.exit()
+                    elif event.type == KEYDOWN:
+                        self.controller(event.key)
+                    elif event.type == pygame.DROPFILE:
+                        self.file_name = event.file
+                        if not self.file_name.lower().endswith(('.wav', '.mp3', '.ogg', '.flac', '.opus', 'm4a', '.raw')):
+                            self.status = "Error: Not an Audio File"
+                        else:
+                            pygame.mixer.music.stop()
+                            self.status = "stopped"
+                            self.load_and_convert_audio()
+                            self.play_audio()
+                            self.read_audio_file()
 
-            if self.num <= 0:
-                self.status = "stopped"
+                if self.num is not None and self.num <= 0:
+                    self.status = "stopped"
 
-            file_name = os.path.basename(self.file_name)
-            display_text = f"NOW PLAYING : {file_name}"
-            name = self.my_font.render(display_text, True, (255, 255, 255))
-            info = self.my_font.render(self.status.upper() + "" + self.get_time(), True, (255, 255, 255))
-            self.screen.fill((0, 0, 0))
-            self.screen.blit(name, (0, 0))
-            self.screen.blit(info, (0, 18))
-            self.fpsclock.tick(self.FPS)
-            self.vis()
-            pygame.display.update()
+                display_text = self.status
+                text_surface = self.my_font.render(display_text, True, (255, 255, 255))
+                text_rect = text_surface.get_rect(center=(self.NUMBER * self.WIDTH / 2, 50 + self.HEIGHT / 2))
+                self.screen.fill((0, 0, 0))
+                self.screen.blit(text_surface, text_rect)
+
+                if self.file_name is not None and self.status != "Error: Not an Audio File":
+                    file_name = os.path.basename(self.file_name)
+                    display_text = f"NOW PLAYING : {file_name}"
+                    name = self.my_font.render(display_text, True, (255, 255, 255))
+                    info = self.my_font.render(self.status.upper() + "" + self.get_time(), True, (255, 255, 255))
+                    self.screen.blit(name, (0, 0))
+                    self.screen.blit(info, (0, 18))
+                    self.vis()
+
+                self.fpsclock.tick(self.FPS)
+                pygame.display.update(pygame.Rect(0, 0, self.NUMBER * self.WIDTH, 50 + self.HEIGHT))
 
 def main():
-    parser = argparse.ArgumentParser(description="Audio Visualizer")
-
-    parser.add_argument('--play', type=str, required=True, help='The path of the audio file to play')
-
-    args = parser.parse_args()
-
     pygame.init()
     pygame.mixer.init()
-    visualizer = MUSYNC(args.play)
-    visualizer.load_and_convert_audio()
-    visualizer.play_audio()
-    visualizer.read_audio_file()
+    visualizer = AudioVisualizer()
     visualizer.run()
 
 if __name__ == "__main__":
