@@ -49,10 +49,15 @@ auto-py-to-exe
 triggering a `Auto Py To Exe window`. To know more about the process visit <a href="https://pypi.org/project/auto-py-to-exe/">here</a>.
 
 > in option Script Location : add path to `musync.py`
+
 > in option Onefile : select One File
+
 > in option Console Window: select Window Based (hide the console)
+
 > in option Icon : add path to `icon.ico`
+
 > in option Additional Files : add path to logo.png
+
 > Click CONVERT .PY TO .EXE
 
 after finishing an `output` folder will appear containing the  `musync.exe` application. Copy and add logo.png to this folder(`output`) also.
